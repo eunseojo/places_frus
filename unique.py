@@ -1,17 +1,15 @@
 import pickle
 
-with open("./nations_cognates.txt","r") as f:
+with open("/Users/eunseo/Desktop/countries/locations_cognates.txt","r") as f:
 	ff = f.read()
 
 q = ff.split("\n")
-
-
-multi = {}
 
 multi_4 = []
 multi_3 = []
 multi_2 = []
 single = []
+
 
 def print_repeat(country, unique):
 	if country in unique:
@@ -32,13 +30,14 @@ def allocate(no_words, nation, label):
 
 for item in q:
 	li = item.split(", ")
-	if len(li) > 1:
-		label = "00_" + "".join(li[0].split(" "))
-		multi[label] = li
-		for nation in li:
-			n_split = nation.split()
-			no_words = len(n_split)
-			allocate(no_words, nation, label)
+	label = "00_" + "".join(li[0].split(" "))
+	for nation in li:
+		n_split = nation.split()
+		no_words = len(n_split)
+		allocate(no_words, nation, label)
+	
+
+
 
 ordered = []
 
@@ -47,8 +46,9 @@ ordered.extend(sorted(multi_3, key=lambda x: x[2], reverse=True))
 ordered.extend(sorted(multi_2, key=lambda x: x[2], reverse=True))
 ordered.extend(sorted(single, key=lambda x: x[2], reverse=True))
 
+print(ordered)
 
-pickle.dump(ordered, open("./sorted_places", "wb"))
+pickle.dump(ordered, open("/Users/eunseo/Desktop/countries/sorted_places", "wb"))
 
 #order: 1. Multiple token words, 2. Longest characters
 
